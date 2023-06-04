@@ -3,6 +3,7 @@ xhost +local:root
 docker run -it --rm\
         --name=miapr_project \
         --shm-size=1g \
+	      --ipc=host \
         -e DISPLAY=$DISPLAY \
         -e XDG_RUNTIME_DIR=/tmp \
         -e QT_X11_NO_MITSHM=1 \
