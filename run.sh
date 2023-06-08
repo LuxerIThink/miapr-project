@@ -13,5 +13,6 @@ docker run -it --rm\
         --device=/dev/dri:/dev/dri \
         --device=/dev/video0 \
         --network=host \
+        --privileged \
         miapr_project \
         bash
