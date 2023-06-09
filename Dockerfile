@@ -26,11 +26,12 @@ COPY user_files  .
 RUN echo ". install/setup.bash" >> ~/.bashrc \
     && bash -c "source ~/.bashrc" \
     && . /opt/ros/humble/setup.sh \
-    && export TURTLEBOT3_MODEL=waffle \
-    && export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/humble/share/turtlebot3_gazebo/models \
     && colcon build \
     && bash -c "source /opt/ros/humble/setup.bash" \
-    && bash -c "source install/local_setup.bash" 
+    && bash -c "source install/setup.bash" \
+    && bash -c "export TURTLEBOT3_MODEL=waffle" \
+    && bash -c "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/humble/share/turtlebot3_gazebo/models" 
+
     # && export GAZEBO_MODEL_DATABASE_URI="" 
 
 # ENV TURTLEBOT3_MODEL=waffle
