@@ -16,6 +16,7 @@ def generate_launch_description():
     nav_config_path = LaunchConfiguration('nav_params')
     rviz_config_path = LaunchConfiguration('rviz_path')
     map_path = LaunchConfiguration('map_path')
+    gazebo_dir = get_package_share_directory('turtlebot3_gazebo')
     bringup_dir = get_package_share_directory('nav2_bringup')
 
     nav_yaml_params = DeclareLaunchArgument(
@@ -42,6 +43,10 @@ def generate_launch_description():
                     }.items()
     )
 
+    gazebo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(gazebo_dir, 'launch', 'turtlebot3_world.launch.py'))
+    )
+
     rviz = launch_ros.actions.Node(
         package='rviz2',
         executable='rviz2',
@@ -54,5 +59,6 @@ def generate_launch_description():
     ld.add_action(map_yaml_path)
     ld.add_action(rviz_path)
     ld.add_action(nav2_launch)
+    ld.add_action(gazebo_launch)
     ld.add_action(rviz)
     return ld
