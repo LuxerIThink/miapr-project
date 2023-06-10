@@ -11,12 +11,13 @@ class Dist(Node):
     def __init__(self):
         super().__init__('planner_distance')
         self.pathSubscriber = self.create_subscription(Path, '/received_global_plan',self.sub_callback,10)
+        self.goalSubscriber = self.create_subscription(PoseStamped, '/goal_pose',self.sub_callback2,10)
         self.goalPublisher = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
         self.boool = True
 
-        self.goalX = -1.
-        self.goalY = -1.
+        self.goalX = 2.0
+        self.goalY = 1.0
 
         self.startTime = self.get_clock().now()
         self.publish_goal(self.goalX, self.goalY)
@@ -40,7 +41,10 @@ class Dist(Node):
             for i in range(len(data.poses) - 1):
                 pathLength += math.sqrt(math.pow((data.poses[i].pose.position.x - data.poses[i+1].pose.position.x), 2) + math.pow((data.poses[i].pose.position.y- data.poses[i+1].pose.position.y), 2))
             print('Path length : ', pathLength)
-        
+
+    def sub_callback2(self, data: PoseStamped):
+        print(data)
+
 def main(args=None):
     rclpy.init(args=args)
     dist = Dist()
