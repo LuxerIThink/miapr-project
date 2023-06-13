@@ -29,15 +29,14 @@ RUN echo ". install/setup.bash" >> ~/.bashrc \
     # && bash -c "chmod +x /exec/dist.py" \
     && colcon build \
     && bash -c "source /opt/ros/humble/setup.bash" \
-    && bash -c "source install/setup.bash" 
-    # && bash -c "export TURTLEBOT3_MODEL=waffle" \
-    # && bash -c "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/humble/share/turtlebot3_gazebo/models" 
-
-
-    # && export GAZEBO_MODEL_DATABASE_URI="" 
+    && bash -c "source install/setup.bash"
 
 ENV TURTLEBOT3_MODEL=waffle
 ENV GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:/opt/ros/humble/share/turtlebot3_gazebo/models
 
 # Set settings
 RUN touch /root/.Xauthority
+
+RUN cp $WORKDIR/others/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
+
+
